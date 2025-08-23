@@ -2,6 +2,8 @@
 
 requires go v1.24
 
+license of this version: public domain
+
 ## primitives
 
 All integers must consists of only digits from `0` to `9`. All words prefixed by a single-quote `'` is considered to be word literal (e.g. `Factorial` executes the `Factorial` command, but `'Factorial` pushes the word `Factorial` onto the stack). Boolean literals are `TRUE` and `FALSE`. 
