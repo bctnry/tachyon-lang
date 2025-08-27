@@ -1,8 +1,10 @@
 # tachyon demo
 
-requires go v1.24
-
 license of this version: public domain
+
+## build
+
+`make tachyon`
 
 ## primitives
 
@@ -17,11 +19,23 @@ rot3  ::  a b c ...  -->  c a b ...
 inc  ::  INT ...  -->  INT ...   // integer increment
 dec  ::  INT ...  -->  INT ...   // integer decrement
 +  ::  INT INT ...  -->  INT ...   // integer add
+-  ::  INT INT ...  -->  INT ...   // integer subtract
 *  ::  INT INT ...  -->  INT ...   // integer multiply
+/  ::  INT INT ...  -->  INT ...   // integer divide
+MOD  ::  INT INT ...  -->  INT ...   // integer modulo
 <=  ::  INT INT ...  -->  BOOL ...   // integer comparison
+>=  ::  INT INT ...  -->  BOOL ...
+<  ::  INT INT ...  -->  BOOL ...
+>  ::  INT INT ...  -->  BOOL ...
 ==  ::  INT INT ...  -->  BOOL ...
+!=  ::  INT INT ...  -->  BOOL ...
+AND  ::  BOOL BOOL ...  -->  BOOL ...  // boolean conjunction
+OR  ::  BOOL BOOL ...  -->  BOOL ...  // boolean disjunciton
+NOT  ::  BOOL BOOL ...  -->  BOOL ...  // boolean negation
 if  ::  BOOL (a -> b) (a -> c) ...  -->  (b | c)   // condition
+while  ::  (a b ... -> BOOL b ...) (b -> a b ...)  ...  -->  b ...   // repeat while condition is true
 dstk  ::  a  -->  a   // dump stack; displays all the elements on the stack
+denv  ::  a  -->  a   // dump environment; displays all the elements defined in the curren environment
 #  ::  WORD a ...  -->  ...   // define in current environment
 $  ::  WORD ...  -->  a ...   // retrieve from current environment
 begin  ::  a  -->  a   // new environment page

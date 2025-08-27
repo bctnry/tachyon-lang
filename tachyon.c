@@ -369,6 +369,14 @@ void Tachyon_Exec(TachyonEnv* env, TachyonDatum* d) {
 			TachyonDatum* a = Tachyon_Env_PopStack(env);
 			TachyonDatum* b = Tachyon_Env_PopStack(env);
 			Tachyon_Env_PushStack(env, Tachyon_New_Bool(b->v.intval>=a->v.intval));
+		} else if (strcmp(d->v.strval->base, "<") == 0) {
+			TachyonDatum* a = Tachyon_Env_PopStack(env);
+			TachyonDatum* b = Tachyon_Env_PopStack(env);
+			Tachyon_Env_PushStack(env, Tachyon_New_Bool(b->v.intval<a->v.intval));
+		} else if (strcmp(d->v.strval->base, ">") == 0) {
+			TachyonDatum* a = Tachyon_Env_PopStack(env);
+			TachyonDatum* b = Tachyon_Env_PopStack(env);
+			Tachyon_Env_PushStack(env, Tachyon_New_Bool(b->v.intval>a->v.intval));
 		} else if (strcmp(d->v.strval->base, "==") == 0) {
 			TachyonDatum* a = Tachyon_Env_PopStack(env);
 			TachyonDatum* b = Tachyon_Env_PopStack(env);
