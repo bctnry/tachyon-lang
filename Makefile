@@ -4,6 +4,7 @@ OBJECTS = arraylist.o \
 	hashtable.o \
 	auxfuncs.o \
 	str.o \
+	tachyon.o \
 	main.o
 
 clean:

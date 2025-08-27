@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Jenkin's "one_at_a_time" hash function.
 uint32_t bytestring_hash(const char* key, size_t length) {
-	// Jenkin's "one_at_a_time" hash function.
 	size_t i = 0;
 	uint32_t res = 0;
 	while (i < length) {

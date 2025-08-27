@@ -6,34 +6,34 @@
 
 typedef struct String {
 	char* base;
-	_Bool allocated;
 	size_t len;
 } String;
 
-// Create a string object from static character array.
-String* String_NewFromStatic(char* s);
-
-// Create a string object from allocated character array.
-// This function takes the ownership from its caller; the caller
-// should not free the array.
-String* String_NewFromAllocated(char* s);
+// Create a string object from a character array.
+// This function creates a clone of the character array. If the
+// caller has acquired the memory by using malloc/calloc or other
+// means, they own the memory and should free them when appropriate.
+String *String_New(const char *s);
 
 // Creates a new string object that combines the two string object.
-// This function will NOT free any of its arguments.
+// This function will NOT dispose any of its arguments.
 String* String_Append(String* s1, String* s2);
 
 // Creates a new string object that appends multiple string together.
-// This function will NOT free any of its arguments.
+// This function will NOT dispose any of its arguments.
 String* String_Join(String** s, size_t slen, String* sep);
 
 // Creates a new string object from a substring of an existing
-// string object. This function will NOT free any of its arguments.
+// string object. This function will NOT dispose any of its arguments.
 String* String_SubString(String* s, size_t start, size_t end);
 
 // Dispose a string object and free all the related memory.
 void String_Dispose(String* s);
 
 // Convert a string object to a c-style zero-terminated string.
-char* String_ToCharArray(String* s);
+// This would allocate a new memory block, whose full ownership is
+// given to the caller. Freeing the string object will not free
+// this memory block; the caller is responsible for freeing it.
+char* String_CloneToCharArray(String* s);
 
 #endif

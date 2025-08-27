@@ -2,19 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-String* String_NewFromStatic(char* s) {
+String* String_New(const char* s) {
 	String* res = (String*)calloc(1, sizeof(String));
-	res->base = s;
-	res->allocated = false;
-	res->len = strlen(s);
+	size_t l = strlen(s);
+	char* base = (char*)calloc(l, sizeof(char));
+	base[0] = 0;
+	strcat(base, s);
+	res->base = base;
+	res->len = l;
 	return res;
 }
 
-String* String_NewFromAllocated(char* s) {
+String* String__newWithOwnedBuffer(char* s, size_t l) {
 	String* res = (String*)calloc(1, sizeof(String));
 	res->base = s;
-	res->allocated = true;
-	res->len = strlen(s);
+	res->len = l;
 	return res;
 }
 
@@ -24,7 +26,7 @@ String* String_Append(String* s1, String* s2) {
 	rr[0] = 0;
 	strcat(rr, s1->base);
 	strcat(rr, s2->base);
-	return String_NewFromAllocated(rr);
+	return String__newWithOwnedBuffer(rr, r);
 }
 
 String* String_Join(String** s, size_t slen, String* sep) {
@@ -42,26 +44,30 @@ String* String_Join(String** s, size_t slen, String* sep) {
 		strcat(rr, sep->base);
 		strcat(rr, s[i]->base);
 	}
-	return String_NewFromAllocated(rr);
+	return String__newWithOwnedBuffer(rr, sl);
 }
 
 String* String_SubString(String* s, size_t start, size_t end) {
 	if (end <= start) { return NULL; }
 	if (start >= s->len) { return NULL; }
-	char* res = (char*)calloc(end-start+1, sizeof(char));
+	size_t len = end-start;
+	char* res = (char*)calloc(len+1, sizeof(char));
 	res[end-start] = 0;
-	for (size_t i = 0; i < end-start; i++) {
+	for (size_t i = 0; i < len; i++) {
 		res[i] = s->base[start+i];
 	}
-	return String_NewFromAllocated(res);
+	return String__newWithOwnedBuffer(res, len);
 }
 
 void String_Dispose(String *s) {
-	if (s->allocated) { free(s->base); }
+	free(s->base);
 	free(s);
 }
 
-char* String_ToCharArray(String* s) {
-	return s->base;
+char* String_CloneToCharArray(String* s) {
+	char* res = (char*)calloc(s->len, sizeof(char));
+	res[0] = 0;
+	strcat(res, s->base);
+	return res;
 }
 
